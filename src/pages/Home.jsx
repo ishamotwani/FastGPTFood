@@ -1,14 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import {BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate } from 'react-router-dom';
-//import logoIMG from './images/fastFoodTempImg';
+import TempImg from './images/TempImg.png';
+
+//Order Button & the TempImg stuff has not been tested
+
+function OrderButton() {
+  const navigate = useNavigate();
+  
+  const moveButton = () => {
+    navigate('/Order');
+  }
+
+  return (
+    <div>
+      <button onClick={moveButton}>Order</button>
+    </div>
+  )
+}
 
 function Home() {
     return (
         <div>
           <header>
-            <h1>Welcome to the Home Page</h1>
+            <img src={TempImg} alt='Logo' />
+            <Navigation />
           </header>
-          <Navigation />
+
+          <div>
+            <img src={TempImg} alt='Special Meal' />
+            <p>Something About the meal</p>
+            <OrderButton />
+          </div>
+
+          <div>
+            <img src={TempImg} alt='UHHHH' />
+            <p>Something About the image</p>
+          </div>
+
+          <div>
+            <img src={TempImg} alt='IM THINKING IM THINKING' />
+            <p>Something About the image</p>
+          </div>
         </div>
     );
 }

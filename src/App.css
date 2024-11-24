@@ -40,3 +40,14 @@
 .read-the-docs {
   color: #888;
 }
+
+
+/*
+Perma Key Stuff
+*/
+
+.navi {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+}

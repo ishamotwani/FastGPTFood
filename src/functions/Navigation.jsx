@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate } from 'react-router-dom';
-//import logoIMG from './images/fastFoodTempImg';
 
 function Navigation() {
     const navigate = useNavigate();
@@ -26,7 +25,7 @@ function Navigation() {
     };
 
     return (
-        <div>
+        <div className="navi">
             <button onClick={homeButton}>Home</button>
             <button onClick={aboutButton}>About</button>
             <button onClick={orderButton}>Order</button>
