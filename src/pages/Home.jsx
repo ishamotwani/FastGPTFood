@@ -29,18 +29,18 @@ function Home() {
 
           <div>
             <img src={TempImg} alt='Special Meal' className='orderImg' />
-            <p>Something About the meal</p>
+            <span>Something About the meal</span>
             <OrderButton />
           </div>
 
           <div>
             <img src={TempImg} alt='maybe about our order different system?' className='specialImg' />
-            <p>Something About the image</p>
+            <span>Something About the image</span>
           </div>
 
           <div>
             <img src={TempImg} alt='maybe like donations we are doing?' className='specialImg'/>
-            <p>Something About the image</p>
+            <span>Something About the image</span>
           </div>
         </div>
     );

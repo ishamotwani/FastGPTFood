@@ -35,21 +35,19 @@ p {
 }
 
 .orderImg {
-    max-width: 100%;
+    max-width: 60%;
     height: auto; 
     border-radius: 10px;
     margin: 20px auto;
-    display: block;
 }
 
 
 .specialImg {
-    max-width: 80%; 
+    max-width: 40%; 
     height: auto; 
     border: 2px solid #ddd; 
     border-radius: 5px;
     margin: 20px auto;
-    display: block;
 }
 
 button {
