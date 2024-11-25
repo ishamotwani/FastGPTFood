@@ -9,6 +9,9 @@ import Cart from './pages/Cart';
 import Contact from './pages/Contact';
 import Navigation from './functions/Navigation';
 
+
+//App is just getting routers up and loaded
+//Everything else will be done on their own pages or in the function folder
 function App() {
   return (
     <Router>

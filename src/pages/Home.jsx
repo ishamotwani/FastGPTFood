@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate }
 import TempImg from '../images/TempImg.png';
 import Navigation from '../functions/Navigation';
 
-//Order Button & the TempImg stuff has not been tested
+//things work now, it's now just a formatting issue
 
 function OrderButton() {
   const navigate = useNavigate();
