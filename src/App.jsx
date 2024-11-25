@@ -1,7 +1,7 @@
 //Import Section
 import {BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
 import { useState } from 'react'
-import './App.css'
+import './CssPages/App.css'
 import Home from './pages/Home';
 import Order from './pages/Order';
 import About from './pages/About';
