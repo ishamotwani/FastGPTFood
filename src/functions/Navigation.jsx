@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate } from 'react-router-dom';
+import '../CssPages/Navi.css';
 
 //this is how the user will be able to move from page to page
 //you will just import the navigation function to the header? of any page and the buttons will show up
