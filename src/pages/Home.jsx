@@ -27,21 +27,23 @@ function Home() {
             <Navigation />
           </header>
 
-          <div>
+          <div className='specialImgSection'>
             <img src={TempImg} alt='Special Meal' className='orderImg' />
-            <span>Something About the meal</span>
-            <OrderButton />
+            <div className='imgContent'>
+              <span>Meal description</span>
+              <OrderButton />
+            </div>
           </div>
 
-          <div>
+          <span>
             <img src={TempImg} alt='maybe about our order different system?' className='specialImg' />
-            <span>Something About the image</span>
-          </div>
-
-          <div>
             <img src={TempImg} alt='maybe like donations we are doing?' className='specialImg'/>
+          </span>
+
+          <p className='Imgdescription'>
+            <span>Something About the image  </span>
             <span>Something About the image</span>
-          </div>
+          </p>
         </div>
     );
 }

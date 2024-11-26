@@ -2,12 +2,6 @@
     display: flex;
     justify-content: flex-start;
     gap: 100px;
-  }
-
-  @media (max-width: 768px) {
-    .navi { 
-        display: flex;
-        justify-content: flex-start;
-        gap: 5px;
-      }
-  }
+    max-width: 50%;
+    height: auto;
+}

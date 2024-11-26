@@ -41,13 +41,35 @@ p {
     margin: 20px auto;
 }
 
+.specialImgSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 20px 0;
+}
 
 .specialImg {
-    max-width: 40%; 
+    max-width: 45%; 
     height: auto; 
-    border: 2px solid #ddd; 
-    border-radius: 5px;
-    margin: 20px auto;
+    margin-bottom: 10px;
+}
+
+.imgContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.imgContent p {
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+.Imgdescription {
+    max-width: 100%; 
+    height: auto; 
+    margin-left: 20px;
 }
 
 button {
@@ -62,5 +84,5 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #4cbf4e;
 }

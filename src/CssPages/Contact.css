@@ -1,0 +1,126 @@
+html, body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffe8e8;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+}
+
+header img {
+    height: 60px;
+    object-fit: contain;
+}
+
+header nav {
+    display: flex;
+    gap: 10px;
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.contactSection1 {
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    width: 255px;
+}
+
+.contactSection1 img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+}
+
+.contactSection2 {
+    position: absolute;
+    top: 480px;
+    left: 10%;
+    width: 255px;
+}
+
+.contactSection2 img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+}
+
+.email {
+    position: absolute;
+    top: 30%;
+    right: 15%;
+    width: 255px;
+}
+
+.email img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+}
+
+.email span {
+    position: absolute;
+    top: 26%;
+}
+
+.phone {
+    position: absolute;
+    top: 90%;
+    right: 15%;
+    width: 255px;
+}
+
+.phone img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+}
+
+.phone span {
+    position: absolute;
+    top: 26%;
+}
+
+.physicalLocation {
+    position: absolute;
+    top: 60%;
+    right: 15%;
+    width: 255px;
+}
+
+.physicalLocation img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+}
+
+.physicalLocation span {
+    position: absolute;
+    top: 26%;
+}
