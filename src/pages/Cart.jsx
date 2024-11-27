@@ -26,11 +26,11 @@ function Cart ({items = [], removeItem, removeAll, cost}) {
     }
     
     const visaButton = () => {
-        setTypePay("Master Card")
+        setTypePay("Visa")
     }
     
     const paypalButton = () => {
-        setTypePay("Master Card")
+        setTypePay("Paypal")
     }
 
     const purchaseButton = () => {
