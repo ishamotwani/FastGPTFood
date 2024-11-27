@@ -23,7 +23,6 @@ function Home() {
     return (
         <div>
           <header>
-            <img src={TempImg} alt='Logo' />
             <Navigation />
           </header>
 

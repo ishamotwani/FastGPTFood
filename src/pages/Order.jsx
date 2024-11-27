@@ -4,14 +4,25 @@ import TempImg from '../images/TempImg.png';
 import Navigation from '../functions/Navigation';
 import '../CssPages/Order.css';
 
-function Order () {
+// Anything past navi is temp because OMG idk how we are creating a chatbot
+function Order ({addItem}) {
+    const [input, setInput] = useState("");
+    
+
+    const add = () => {
+        addItem(input);
+        setInput("")
+    }
+
     return (
         <div>
         <header>
-            <img src={TempImg} alt='Logo' />
             <Navigation />
-          </header>
+        </header>
 
+          <h3>Add Items</h3>
+          <input type='text' value={input} onChange={(e) => setInput(e.target.value)} placeholder='help' />
+          <button onClick={add}>Add</button>
         </div>
     );
 }

@@ -1,7 +1,29 @@
-.navi {
-    display: flex;
-    justify-content: flex-start;
-    gap: 100px;
-    max-width: 50%;
-    height: auto;
+.homeButton {
+  position: absolute;
+  left: 60vh;
+  width: 100px;
+}
+
+.aboutButton {
+  position: absolute;
+  left: 80vh;
+  width: 100px;
+}
+
+.contactButton {
+  position: absolute;
+  left: 100vh;
+  width: 100px;
+}
+
+.orderButton {
+  position: absolute;
+  left: 120vh;
+  width: 100px;
+}
+
+.cartButton {
+  position: absolute;
+  left: 140vh;
+  width: 100px;
 }

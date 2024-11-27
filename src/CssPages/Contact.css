@@ -6,25 +6,6 @@ html, body {
     height: 100vh;
 }
 
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-}
-
-header img {
-    height: 60px;
-    object-fit: contain;
-}
-
-header nav {
-    display: flex;
-    gap: 10px;
-}
-
 main {
     padding: 20px;
     text-align: center;
@@ -63,6 +44,13 @@ p {
     border-radius: 50%;
     margin-right: 20px;
     object-fit: cover;
+}
+
+.logoImg {
+    position: absolute;
+    top: 30%;
+    right: 15%;
+    width: 255px;
 }
 
 .email {

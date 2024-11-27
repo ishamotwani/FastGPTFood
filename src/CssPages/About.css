@@ -5,15 +5,6 @@ body {
     background-color: #ffe8e8;
 }
 
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-}
-
 header img {
     height: 60px;
     object-fit: contain;
@@ -48,20 +39,21 @@ p {
     margin: 20px 0;
 }
 
-.specialImg {
+.ourBeliefImg {
     max-width: 45%; 
     height: auto; 
     margin-bottom: 10px;
 }
 
-.imgContent {
+.personImg {
     display: flex;
     flex-direction: column;
     gap: 10px;
     flex: 1;
+    max-width: 35%;
 }
 
-.imgContent p {
+.personImg p {
     font-size: 0.8rem;
     margin: 0;
 }

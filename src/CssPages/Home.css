@@ -5,33 +5,9 @@ body {
     background-color: #ffe8e8;
 }
 
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-}
-
-header img {
-    height: 60px;
-    object-fit: contain;
-}
-
-header nav {
-    display: flex;
-    gap: 10px;
-}
-
 main {
     padding: 20px;
     text-align: center;
-}
-
-p {
-    font-size: 1.2rem;
-    color: #555;
 }
 
 .orderImg {
