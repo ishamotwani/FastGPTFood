@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate } from 'react-router-dom';
 import Navigation from '../functions/Navigation';
 
-function Cart ({items = [], removeItem, removeAll, cost}) {
+function Cart ({items = [], removeItem, removeAll, setCostArray, costArray, setCost, cost}) {
     //if it's in-person deliver or online
     //time is also set whenever a delibutton is trigger
     const [typeOrder, setTypeOrder] = useState("");
@@ -39,6 +39,8 @@ function Cart ({items = [], removeItem, removeAll, cost}) {
         setTypePay("");
         setDeliTime(0);
         removeAll();
+        setCostArray(0);   
+        setCost(0);
     }
 
     return (
@@ -107,6 +109,11 @@ function Cart ({items = [], removeItem, removeAll, cost}) {
                 </div>
             )}
         </div>
+        
+        <div className='costOverall'>
+            <p>Overall Cost: ${cost}</p>
+        </div>
+        
         <div className='purchase'>
             <button onClick={purchaseButton}>Purchase</button>
         </div>

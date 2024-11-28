@@ -24,14 +24,30 @@ function App() {
   // with the add button for the order page and remove for the cart page
   //the cost list will set a cost for the item; with items and cost being connected by list placement
   const [items, setItems] = useState([]);
-  const [cost, setCost] = useState([]);
+  
+  //the difference between the two const, is one array keeps track of each purchase to a value
+  //so if the user pops one an item from the array with the remove section, it also pops the cost
+  //and then in the cart area; we will simply just do the math there for cost
+  const [costArray, setCostArray] = useState([]);
+  const [cost, setCost] = useState(0);
 
+  //this adds an item
   const addItem = (item) => {
     setItems ([...items, item]);
   }
 
+  //this removes an item as well as the cost
   const removeItem = (index) => {
     setItems(items.filter((_, i) => i !== index));
+
+    const removedCost = costArray[index];
+    setCostArray(items.filter((_, i) => i !== index));
+
+    setCost(prevCost => prevCost - removedCost);
+
+    if (cost <= 0 || cost === null) {
+      setCost = 0;
+    }
   }
 
   const removeAllItems = () => {
@@ -44,9 +60,9 @@ function App() {
         <Navigation />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/Order" element={<Order  addItem={addItem}/>} />
+        <Route path="/Order" element={<Order addItem={addItem} setCostArray={setCostArray} setCost={setCost}/>} />
         <Route path="/About" element={<About />} />
-        <Route path="/Cart" element={<Cart items={items} removeItem={removeItem} removeAll={removeAllItems} cost={cost}/>} />
+        <Route path="/Cart" element={<Cart items={items} removeItem={removeItem} removeAll={removeAllItems} setCostArray={setCostArray} costArray={costArray} setCost={setCost} cost={cost} />} />
         <Route path="/Contact" element={<Contact />} />
       </Routes>
       </div>
