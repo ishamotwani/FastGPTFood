@@ -44,10 +44,6 @@ function App() {
     setCostArray(items.filter((_, i) => i !== index));
 
     setCost(prevCost => prevCost - removedCost);
-
-    if (cost <= 0 || cost === null) {
-      setCost = 0;
-    }
   }
 
   const removeAllItems = () => {
