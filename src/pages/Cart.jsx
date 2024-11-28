@@ -7,10 +7,9 @@ function Cart ({items = [], removeItem, removeAll, cost}) {
     //time is also set whenever a delibutton is trigger
     const [typeOrder, setTypeOrder] = useState("");
     const [deliTime, setDeliTime] = useState(0);
-  
-    //Payment type
     const [typePay, setTypePay] = useState("");
 
+    //delivery types
     const homeDeliButton = () => {
         setTypeOrder("Drop-Off Delivery");
         setDeliTime(20 + (items.length * 3) );
@@ -21,6 +20,7 @@ function Cart ({items = [], removeItem, removeAll, cost}) {
         setDeliTime((items.length * 3));
     }
 
+    //Payment type
     const masterCardButton = () => {
         setTypePay("Master Card")
     }
@@ -33,6 +33,7 @@ function Cart ({items = [], removeItem, removeAll, cost}) {
         setTypePay("Paypal")
     }
 
+    //'reset' button basically
     const purchaseButton = () => {
         setTypeOrder("");
         setTypePay("");
@@ -72,10 +73,20 @@ function Cart ({items = [], removeItem, removeAll, cost}) {
                     {typeOrder === "Drop-Off Delivery" ? (
                         <div>
                             <p>Estimated Delivery Time: {deliTime} minutes</p>
+                            <p>Your home location?</p>
+                            <input type='text' placeholder='help' />
+
                         </div>
                     ) : (
                         <div>
                             <p>Estimated Pickup Time: {deliTime} minutes</p>
+                            <p>What store you picking up from</p>
+                            <select onChange={(e) => console.log(e.target.value)}>
+                                <option value="">Please Select a Location</option>
+                                <option value="LocationA">The Moon</option>
+                                <option value="LocationB">The Deep Beyond</option>
+                                <option value="LocationC">My Death Bed</option>
+                            </select>
                         </div>
                     )}
                     </div>

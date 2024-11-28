@@ -5,9 +5,24 @@ import Navigation from '../functions/Navigation';
 import '../CssPages/Order.css';
 
 // Anything past navi is temp because OMG idk how we are creating a chatbot
+//before everything breaks we are making one last stabbing cut to the neck
+
+function CartButton() {
+    const navigate = useNavigate();
+    
+    const moveButton = () => {
+      navigate('/Cart');
+    }
+  
+    return (
+      <div>
+        <button onClick={moveButton}>Order</button>
+      </div>
+    )
+  }
+
 function Order ({addItem}) {
     const [input, setInput] = useState("");
-    
 
     const add = () => {
         addItem(input);
@@ -20,9 +35,15 @@ function Order ({addItem}) {
             <Navigation />
         </header>
 
+        <div>
           <h3>Add Items</h3>
           <input type='text' value={input} onChange={(e) => setInput(e.target.value)} placeholder='help' />
           <button onClick={add}>Add</button>
+        </div>
+
+        <div>
+            <CartButton />
+        </div>
         </div>
     );
 }
