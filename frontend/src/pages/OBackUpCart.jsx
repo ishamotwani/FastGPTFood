@@ -33,8 +33,9 @@ function Order({ addItem, setCostArray, setCost }) {
     const drinkMenu = ["Water", "Pop", "Milkshake", "No Drink"];
     const costDrink = [0.99, 3.99, 4.49, 0];
 
+    //for all side options and drinks
     const sizeItems = ["small", "medium", "large"];
-    const sizeCost = [1, 1.25, 1.5];
+    const sizeCost = [1, 1.25, 1.5]; //muitply for choice of size
     
     const menuItemToLower = menuItems.map((item) => item.toLowerCase());
 
@@ -66,12 +67,12 @@ function Order({ addItem, setCostArray, setCost }) {
             const itemName = menuItems[rememberItem];
             const baseCost = costMenu[rememberItem];
             const sizeFactor = sizeCost[sizeIndex];
-            const totalCost = (baseCost * sizeFactor).toFixed(2);
+            const totalCost = parseFloat(baseCost * sizeFactor).toFixed(2);
 
             //Maybe Drinks Afterwards :)
             addItem(`${itemName} - ${sizeItems[sizeIndex]}`);
             setCostArray((prevCostArray) => [...prevCostArray, totalCost]);
-            setCost((prevCost) => prevCost + totalCost);
+            setCost((prevCost) => parseFloat(prevCost) + parseFloat(totalCost));
             setAddedText(`Your ${itemName.toLowerCase()} ${sizeItems[sizeIndex]} has been added to the cart!`);
             
             //reset point
@@ -86,6 +87,7 @@ function Order({ addItem, setCostArray, setCost }) {
         }
     }
 
+    //user is allowed to click as many toppings as they want
     const toppingsAdd = (toppingIndex, isChecked) => {
         const toppingName = menuToppings[toppingIndex];
         const toppingCost = 0.5; 
@@ -101,16 +103,26 @@ function Order({ addItem, setCostArray, setCost }) {
         }
     };
 
+    //commits the item to the cart / cost
     const toppingsFinalPush = () => {
         const itemName = menuItems[rememberItem];
         const itemCost = costMenu[rememberItem];
-        const toppingsCost = selectedToppings.length * 0.5;
-        const totalCost = (itemCost + toppingsCost).toFixed(2);
+        const totalCost = parseFloat(itemCost + toppingsCost).toFixed(2);
 
-        addItem(`${itemName} with ${selectedToppings.join(", ")}`);
-        setCostArray((prevCostArray) => [...prevCostArray, totalCost]);
-        setCost((prevCost) => prevCost + parseFloat(totalCost));
-        setAddedText(`Your ${itemName.toLowerCase()} with ${selectedToppings.join(", ")} has been added to the cart!`);
+        if (selectedToppings.length === 0) {
+            const totalCost = (itemCost).toFixed(2);
+            addItem(`${itemName} with ${selectedToppings.join(", ")}`);
+            setCostArray((prevCostArray) => [...prevCostArray, totalCost]);
+            setCost((prevCost) => parseFloat(prevCost) + parseFloat(totalCost));
+            setAddedText(`Your ${itemName.toLowerCase()} has been added to the cart!`);
+        } else {
+            const toppingsCost = selectedToppings.length * 0.5;
+            const totalCost = (itemCost + toppingsCost).toFixed(2);
+            addItem(`${itemName} with ${selectedToppings.join(", ")}`);
+            setCostArray((prevCostArray) => [...prevCostArray, totalCost]);
+            setCost((prevCost) => parseFloat(prevCost) + parseFloat(totalCost));
+            setAddedText(`Your ${itemName.toLowerCase()} with ${selectedToppings.join(", ")} has been added to the cart!`);
+        }
 
         //reset
         setCurrentState("menu");
@@ -221,16 +233,5 @@ const ToppingsView = ({ menuToppings, functionToppingsAdd, toppingsFinalPush }) 
         </div>
     );
 };
-
-
-/* if you need it 
-
-
-                {currentState === "pushToCart" && (
-                    <div>
-                        <
-                    </div>
-                )} 
-*/
-
+// a second button appears there idk why 
 export default Order;

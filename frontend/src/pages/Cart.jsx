@@ -1,143 +1,245 @@
-import React, { useState, useEffect } from 'react';
-import {BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate } from 'react-router-dom';
-import Navigation from '../functions/Navigation';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate, } from "react-router-dom";
+import Navigation from "../functions/Navigation";
+import "../CssPages/Order.css";
 
-const CostWillBeZero = ({setCost, cost}) => {
-    useEffect(() => {
-        if (cost === null) {
-            setCost(0);
-        }
-    }, [setCost]);
-    return ( null );
-}
-
-function Cart ({items = [], removeItem, removeAll, setCostArray, costArray, setCost, cost}) {
-    //if it's in-person deliver or online
-    //time is also set whenever a delibutton is trigger
-    //also like half the 
-    const [typeOrder, setTypeOrder] = useState("");
-    const [deliTime, setDeliTime] = useState(0);
-    const [typePay, setTypePay] = useState("");
-
-    //delivery types
-    const homeDeliButton = () => {
-        setTypeOrder("Drop-Off Delivery");
-        setDeliTime(20 + (items.length * 3) );
-    }
-
-    const inPersonDeliButton = () => {
-        setTypeOrder("In-Person Delivery");
-        setDeliTime((items.length * 3));
-    }
-
-    //Payment type
-    const masterCardButton = () => {
-        setTypePay("Master Card")
-    }
-    
-    const visaButton = () => {
-        setTypePay("Visa")
-    }
-    
-    const paypalButton = () => {
-        setTypePay("Paypal")
-    }
-
-    //'reset' button basically
-    const purchaseButton = () => {
-        setTypeOrder("");
-        setTypePay("");
-        setDeliTime(0);
-        removeAll();
-        setCostArray([]);
-        setCostArray(0);   
-        setCost(0);
-        CostWillBeZero();
-    }
-
+//im restarting this from ground level since the code was order one was messy tbh
+//and i would need to re-do it anyhow for the chatbot so doing this JUST TRAINING I guess?
+function CartButton() {
+    const navigate = useNavigate();
+  
+    const moveButton = () => {
+      navigate("/Cart");
+    };
+  
     return (
-        <div>
-        <header>
-            <Navigation />
-        </header>
-        
-        <div className='ItemsInCart'>
-            <h2>Remove Items from Cart</h2>
-            {items.length === 0 ? (
-                <p>cart is empty</p>
-            ) : (
-                <div>
-                    {items.map((item, index) => (
-                        <span key={index}>
-                            {item} <button onClick={() => removeItem(index)}>  X  </button>
-                        </span>
-                    ))}
-                </div>
-            )}
-        </div>
-
-        <div className='DeliveryType'>
-            <button onClick={homeDeliButton}>Drop-Off Delivery</button>
-            <button onClick={inPersonDeliButton}>In-Person Pick Up</button>
-            {typeOrder === "" ? (
-                <h2>Delivery: </h2>
-            ) : (
-                <div>
-                    <h2>Delivery: {typeOrder}</h2>
-                    {typeOrder === "Drop-Off Delivery" ? (
-                        <div>
-                            <p>Estimated Delivery Time: {deliTime} minutes</p>
-                            <p>Your home location?</p>
-                            <input type='text' placeholder='help' />
-
-                        </div>
-                    ) : (
-                        <div>
-                            <p>Estimated Pickup Time: {deliTime} minutes</p>
-                            <p>What store you picking up from</p>
-                            <select onChange={(e) => console.log(e.target.value)}>
-                                <option value="">Please Select a Location</option>
-                                <option value="LocationA">The Moon</option>
-                                <option value="LocationB">The Deep Beyond</option>
-                                <option value="LocationC">My Death Bed</option>
-                            </select>
-                        </div>
-                    )}
-                    </div>
-                )}
-        </div>
-
-        <div className='paymentCards'> 
-            <button onClick={paypalButton}>Pay Pal</button>
-            <button onClick={visaButton}>Visa</button>
-            <button onClick={masterCardButton}>Master Card</button>
-            {typePay === "" ? (
-                <div>
-                    <h3>No Payment type has been chosen</h3>
-                </div>
-            ) : (
-                <div>
-                    <h3>Payment: {typePay}</h3>
-                </div>
-            )}
-        </div>
-        
-        <div className='costOverall'>
-            {cost !== 0 && cost !== null ? (
-                <p>Overall Cost: ${cost}</p>
-            ) : (
-                <div>
-                    <p>Your cart is empty</p>
-                    <CostWillBeZero setCost={setCost} />
-                </div>
-            )}
-        </div>
-        
-        <div className='purchase'>
-            <button onClick={purchaseButton}>Purchase</button>
-        </div>
-    </div>
+      <div>
+        <button onClick={moveButton}>Order</button>
+      </div>
     );
 }
 
-export default Cart;
+function Order({ addItem, setCostArray, setCost }) {
+    const [currentState, setCurrentState] = useState("menu"); //the states are menu, toppings, size, and add item to cart | this is better than firing 50 trigger states omg
+    const [addedText, setAddedText] = useState(""); //displayed text
+    const [timerTriggerText, setTimerTriggerText] = useState(true); //display text for a set amount of time
+    const [rememberItem, setRememberItem] = useState(-1);//this remembers the index, not the actual item
+    const [selectedToppings, setSelectedToppings] = useState([]); //remembers the toppings 
+    const [toppingsCost, setToppingsCost] = useState(0);
+    //menu related const
+    const menuItems = ["Burger", "Chicken Burger", "Double Burger", "Double Chicken Burger", "Fries", "Onion Rings", "Chicken Nuggets", "Chicken Fingers", "Immortal Phoenix Gearblade"];
+    const menuToppings = ["Lettuce", "Tomato", "Cheese"];
+    const costMenu = [4.59, 4.89, 8.59, 8.89, 3.99, 3.99, 2.99, 5.99, 99.99];
+    const drinkMenu = ["Water", "Pop", "Milkshake", "No Drink"];
+    const costDrink = [0.99, 3.99, 4.49, 0];
+
+    const sizeItems = ["small", "medium", "large"];
+    const sizeCost = [1, 1.25, 1.5];
+    
+    const menuItemToLower = menuItems.map((item) => item.toLowerCase());
+
+    //the inetentional add; where the user just has a menu and an add function
+    const intentionalAdd = (name) => {
+      name = name.trim().toLowerCase();
+  
+      const index = menuItemToLower.indexOf(name); 
+      if (index !== -1) {
+          setRememberItem(index); 
+  
+          //0 - 3; to toppings (since thoses are all burgers
+          //4+ is all size related; idk about 
+          if (index === 0 || index === 1 || index === 2 || index === 3) {
+              setCurrentState("toppings");
+          } else if (index === 4 || index === 5 || index === 6 || index === 7) {
+              setCurrentState("size");
+          }
+      } else {
+          setAddedText("Item is not on the Menu; please try again.");
+          setCurrentState("menu");
+          setTimerTriggerText(true); 
+      }
+  };
+  
+  //when size matters fr fr
+    const sizeAdd = (sizeIndex) => {
+        if (rememberItem !== -1) {
+            const itemName = menuItems[rememberItem];
+            const baseCost = costMenu[rememberItem];
+            const sizeFactor = sizeCost[sizeIndex];
+            const totalCost = parseFloat(baseCost * sizeFactor).toFixed(2);
+
+            //Maybe Drinks Afterwards :)
+            addItem(`${itemName} - ${sizeItems[sizeIndex]}`);
+            setCostArray((prevCostArray) => [...prevCostArray, totalCost]);
+            setCost((prevCost) => parseFloat(prevCost) + parseFloat(totalCost));
+            setAddedText(`Your ${itemName.toLowerCase()} ${sizeItems[sizeIndex]} has been added to the cart!`);
+            
+            //reset point
+            setCurrentState("menu");
+            setRememberItem(-1);
+        } else {
+            setAddedText(`Your order did not processs try again.`);
+
+            //still reset point
+            setCurrentState("menu");
+            setRememberItem(-1);
+        }
+    }
+
+    const toppingsAdd = (toppingIndex, isChecked) => {
+        const toppingName = menuToppings[toppingIndex];
+        const toppingCost = 0.5; 
+  
+        if (isChecked) {
+            setSelectedToppings((prevToppings) => [...prevToppings, toppingName]);
+              setToppingsCost((prevCost) => prevCost + toppingCost);
+          } else {
+              setSelectedToppings((prevToppings) =>
+                prevToppings.filter((topping) => topping !== toppingName)
+          );
+        setToppingsCost((prevCost) => prevCost - toppingCost);
+        }
+    };
+
+    const toppingsFinalPush = () => {
+        const itemName = menuItems[rememberItem];
+        const itemCost = costMenu[rememberItem];
+        const totalCost = parseFloat(itemCost + toppingsCost).toFixed(2);
+
+        if (selectedToppings.length === 0) {
+            const totalCost = (itemCost).toFixed(2);
+            addItem(`${itemName} with ${selectedToppings.join(", ")}`);
+            setCostArray((prevCostArray) => [...prevCostArray, totalCost]);
+            setCost((prevCost) => parseFloat(prevCost) + parseFloat(totalCost));
+            setAddedText(`Your ${itemName.toLowerCase()} has been added to the cart!`);
+        } else {
+            const toppingsCost = selectedToppings.length * 0.5;
+            const totalCost = (itemCost + toppingsCost).toFixed(2);
+            addItem(`${itemName} with ${selectedToppings.join(", ")}`);
+            setCostArray((prevCostArray) => [...prevCostArray, totalCost]);
+            setCost((prevCost) => parseFloat(prevCost) + parseFloat(totalCost));
+            setAddedText(`Your ${itemName.toLowerCase()} with ${selectedToppings.join(", ")} has been added to the cart!`);
+        }
+
+        //reset
+        setCurrentState("menu");
+        setRememberItem(-1);
+        setSelectedToppings([]);
+        setToppingsCost(0);
+    }
+
+    //timer to showcase when user have order item and then message go bye bye
+    useEffect(() => {
+        if (timerTriggerText) {
+          const timer = setTimeout(() => {
+            setTimerTriggerText(false);
+          }, 3000);
+    } }, [timerTriggerText]);
+
+    return (
+        <div>
+            <header>
+                <Navigation />
+            </header>
+
+            <div>
+                {currentState === "menu" && (
+                    <div>
+                        <MenuView menuItems={menuItems} functionIntentionalAdd={intentionalAdd} />
+                    </div>   
+                )}
+
+                {currentState === "size" && (
+                    <div>
+                        <SizeView sizeItems={sizeItems} functionSizeAdd={sizeAdd} />
+                    </div>
+                )}
+
+                {currentState === "toppings" && (
+                    <div>
+                        <ToppingsView menuToppings={menuToppings} functionToppingsAdd={toppingsAdd} toppingsFinalPush={toppingsFinalPush}/>
+                        <button></button>
+                    </div>
+                )}
+            </div>
+
+            <div>
+                {timerTriggerText && (
+                    <div>
+                        <p>{addedText}</p>
+                    </div>
+                )}
+            </div>
+            <div>
+                <CartButton />
+            </div>
+
+        </div>
+    );
+}
+
+//you have made it to the view section which has been move to down under congrants
+const MenuView = ({ menuItems, functionIntentionalAdd }) => {
+    return (
+    <div>
+        <h4>Menu</h4>
+        <p>Please select an item on the menu</p>
+        <div>
+            {menuItems.map((item, index) => (
+                <button key={index} onClick={() => functionIntentionalAdd(item)}>
+                {item}
+                </button>
+            ))}
+        </div>
+    </div>
+    );
+};
+
+const SizeView = ({ sizeItems, functionSizeAdd }) => {
+    return (
+        <div>
+            <h4>Please choose a size for your order:</h4>
+            <div>
+                {sizeItems.map((size, index) => (
+                    <button key={index} onClick={() => functionSizeAdd(index)}>
+                    {size}
+                    </button>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+const ToppingsView = ({ menuToppings, functionToppingsAdd, toppingsFinalPush }) => {
+    return (
+        <div>
+            <h4>Please choose the toppings for your order:</h4>
+            <div>
+                {menuToppings.map((topping, index) => (
+                    <div key={index}>
+                        <label>
+                            <input type="checkbox" onChange={(e) => functionToppingsAdd(index, e.target.checked)} />
+                            {topping}
+                        </label>
+                    </div>
+                ))}
+            </div>
+            <div>
+                <button onClick={toppingsFinalPush}>Add to Cart</button>
+            </div>
+        </div>
+    );
+};
+
+
+/* if you need it 
+
+
+                {currentState === "pushToCart" && (
+                    <div>
+                        <
+                    </div>
+                )} 
+*/
+
+export default Order;

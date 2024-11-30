@@ -3,171 +3,232 @@ import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate,
 import Navigation from "../functions/Navigation";
 import "../CssPages/Order.css";
 
-// Anything past navi is temp because OMG idk how we are creating a chatbot
-
+//im restarting this from ground level since the code was order one was messy tbh
+//and i would need to re-do it anyhow for the chatbot so doing this JUST TRAINING I guess?
 function CartButton() {
-  const navigate = useNavigate();
-
-  const moveButton = () => {
-    navigate("/Cart");
-  };
-
-  return (
-    <div>
-      <button onClick={moveButton}>Order</button>
-    </div>
-  );
-}
-
-const MenuView = ({ menuItems, addThenChecksSize }) => {
-  return (
-    <div>
-      <h4>Menu</h4>
-      <p>Please select an item on the menu</p>
+    const navigate = useNavigate();
+  
+    const moveButton = () => {
+      navigate("/Cart");
+    };
+  
+    return (
       <div>
-        {menuItems.map((item, index) => (
-          <button key={index} onClick={() => addThenChecksSize(item)}>
-            {item}
-          </button>
-        ))}
+        <button onClick={moveButton}>Order</button>
       </div>
-    </div>
-  );
-};
-
-//the idea here is to display everything 
-const ToppingView = ({selectedOrder, ItemMenu}) => {
-  return (
-    <div>
-      {selectedOrder === 'Burger' (
-        <div>
-        </div>
-       )}
-    </div>
-  )
+    );
 }
-
-const SizeView = ({ sizeItems, finalAdd }) => {
-  return (
-    <div>
-      <h4>Please choose a size for your order:</h4>
-      <div>
-        {sizeItems.map((size, index) => (
-          <button key={index} onClick={() => finalAdd(index)}>
-            {size}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-};
 
 function Order({ addItem, setCostArray, setCost }) {
-  const [input, setInput] = useState("");
-  const [addedTrigger, setAddedTrigger] = useState(false); //allows the program to know if something has been added
-  const [addedText, setAddedText] = useState(""); //allows the program to know if the added text show showcase
-  const [showItemsSizes, setshowItemsSizes] = useState(false); //allows the program to know if to show the sizes of the menu
-  const [rememberItem, setRememberItem] = useState(""); //this remembers an item position
+    const [currentState, setCurrentState] = useState("menu"); //the states are menu, toppings, size, and add item to cart | this is better than firing 50 trigger states omg
+    const [addedText, setAddedText] = useState(""); //displayed text
+    const [timerTriggerText, setTimerTriggerText] = useState(true); //display text for a set amount of time
+    const [rememberItem, setRememberItem] = useState(-1);//this remembers the index, not the actual item
+    const [selectedToppings, setSelectedToppings] = useState([]); //remembers the toppings 
+    const [toppingsCost, setToppingsCost] = useState(0);
+    //menu related const
+    const menuItems = ["Burger", "Chicken Burger", "Double Burger", "Double Chicken Burger", "Fries", "Onion Rings", "Chicken Nuggets", "Chicken Fingers", "Immortal Phoenix Gearblade"];
+    const menuToppings = ["Lettuce", "Tomato", "Cheese"];
+    const costMenu = [4.59, 4.89, 8.59, 8.89, 3.99, 3.99, 2.99, 5.99, 99.99];
+    const drinkMenu = ["Water", "Pop", "Milkshake", "No Drink"];
+    const costDrink = [0.99, 3.99, 4.49, 0];
 
-  //menu items
-  const menuItems = ["Burger", "Chicken Burger", "Double Burger", "Double Chicken Burger", "Fries", "Onion Rings", "Chicken Nuggets", "Chicken Fingers", "Immortal Phoenix Gearblade"];
-  //toppings or whatever for the items on the main menu
-  //if it's 0 -- then skip it there are no toppings it goes to size?
-  const menuToppings = [["Let-Us", "Tomato", "Cheese"], ["Let-Us", "Tomato", "Cheese"], ["Let-Us", "Tomato", "Cheese"], ["Let-Us", "Tomato", "Cheese"], 0, 0, 0, 0];
-  //the items cost
-  const costMenu = [4.59, 4.89, 8.59, 8.89, 3.99, 3.99, 2.99, 5.99, 99.99];
-  //drink menu
-  const drinkMenu = ["Water", "Pop", "Milkshake"];
-  const costDrink = [0.99, 3,99, 4.49];
+    const sizeItems = ["small", "medium", "large"];
+    const sizeCost = [1, 1.25, 1.5];
+    
+    const menuItemToLower = menuItems.map((item) => item.toLowerCase());
 
-  //sizeItems: size of an orders
-  //sizeCost: how much things get times by depending on the order size
-  //default i guess is small?
-  const sizeItems = ["small", "medium", "large"];
-  const sizeCost = [1, 1.25, 1.5];
-
-  //case insenesitive stuff
-  const menuItemToLower = menuItems.map((item) => item.toLowerCase());
-
-  //this adds an item to the cart, and stores the cost in both an array and int
-  //the array is stored to ensure whenever the user removes it from the cart, the cost tied to that item is also removed
-  //and the int is stored to catch overall numbers
-  const addThenChecksSize = (name) => {
-    if (menuItemToLower.includes(name.toLowerCase())) {
-      setAddedText("Choose a size for your order?");
-      setRememberItem(menuItemToLower.indexOf(name.toLowerCase()));
-      setshowItemsSizes(true);
-      setInput("");
-    } else {
-      setAddedText("What the hell you just tried to add?");
-      setAddedTrigger(true);
-    }
-    setAddedTrigger(true);
+    //the inetentional add; where the user just has a menu and an add function
+    const intentionalAdd = (name) => {
+      name = name.trim().toLowerCase();
+  
+      const index = menuItemToLower.indexOf(name); 
+      if (index !== -1) {
+          setRememberItem(index); 
+  
+          //0 - 3; to toppings (since thoses are all burgers
+          //4+ is all size related; idk about 
+          if (index === 0 || index === 1 || index === 2 || index === 3) {
+              setCurrentState("toppings");
+          } else if (index === 4 || index === 5 || index === 6 || index === 7) {
+              setCurrentState("size");
+          }
+      } else {
+          setAddedText("Item is not on the Menu; please try again.");
+          setCurrentState("menu");
+          setTimerTriggerText(true); 
+      }
   };
+  
+  //when size matters fr fr
+    const sizeAdd = (sizeIndex) => {
+        if (rememberItem !== -1) {
+            const itemName = menuItems[rememberItem];
+            const baseCost = costMenu[rememberItem];
+            const sizeFactor = sizeCost[sizeIndex];
+            const totalCost = parseFloat(baseCost * sizeFactor).toFixed(2);
 
-  //after an user orders an item and it's on the menu
-  //this will trigger - which tries to kill me or smth idk
-  //this will become what optional toppings the item will have.
-  const finalAdd = (sizeIndex) => {
-    if (rememberItem !== null) {
-      const itemName = menuItems[rememberItem];
-      const baseCost = costMenu[rememberItem];
-      const sizeMultiploer = sizeCost[sizeIndex];
-      const totalCost = Math.floor(baseCost * sizeMultiploer * 100) / 100;
+            //Maybe Drinks Afterwards :)
+            addItem(`${itemName} - ${sizeItems[sizeIndex]}`);
+            setCostArray((prevCostArray) => [...prevCostArray, totalCost]);
+            setCost((prevCost) => parseFloat(prevCost) + parseFloat(totalCost));
+            setAddedText(`Your ${itemName.toLowerCase()} ${sizeItems[sizeIndex]} has been added to the cart!`);
+            
+            //reset point
+            setCurrentState("menu");
+            setRememberItem(-1);
+        } else {
+            setAddedText(`Your order did not processs try again.`);
 
-      addItem(`${itemName} - ${sizeItems[sizeIndex]}`);
-      setCostArray((prevCostArray) => [...prevCostArray, totalCost]);
-      setCost((prevCost) => prevCost + totalCost);
-      setAddedText(`Your ${itemName.toLowerCase()} ${sizeItems[sizeIndex]} has been added to the cart!`);
-
-      setInput("");
-      setAddedText(`Your ${sizeItems[sizeIndex]} ${itemName.toLowerCase()} has been added to the cart!`);
-      setshowItemsSizes(false);
-      setRememberItem(null);
-      setAddedTrigger(true);
+            //still reset point
+            setCurrentState("menu");
+            setRememberItem(-1);
+        }
     }
-  };
 
-  //timer to showcase when user have order item and then message go bye bye
-  useEffect(() => {
-    if (addedTrigger) {
-      const timer = setTimeout(() => {
-        setAddedTrigger(false);
-      }, 3000);
+    const toppingsAdd = (toppingIndex, isChecked) => {
+        const toppingName = menuToppings[toppingIndex];
+        const toppingCost = 0.5; 
+  
+        if (isChecked) {
+            setSelectedToppings((prevToppings) => [...prevToppings, toppingName]);
+              setToppingsCost((prevCost) => prevCost + toppingCost);
+          } else {
+              setSelectedToppings((prevToppings) =>
+                prevToppings.filter((topping) => topping !== toppingName)
+          );
+        setToppingsCost((prevCost) => prevCost - toppingCost);
+        }
+    };
+
+    const toppingsFinalPush = () => {
+        const itemName = menuItems[rememberItem];
+        const itemCost = costMenu[rememberItem];
+        const totalCost = parseFloat(itemCost + toppingsCost).toFixed(2);
+
+        if (selectedToppings.length === 0) {
+            const totalCost = (itemCost).toFixed(2);
+            addItem(`${itemName} with ${selectedToppings.join(", ")}`);
+            setCostArray((prevCostArray) => [...prevCostArray, totalCost]);
+            setCost((prevCost) => parseFloat(prevCost) + parseFloat(totalCost));
+            setAddedText(`Your ${itemName.toLowerCase()} has been added to the cart!`);
+        } else {
+            const toppingsCost = selectedToppings.length * 0.5;
+            const totalCost = (itemCost + toppingsCost).toFixed(2);
+            addItem(`${itemName} with ${selectedToppings.join(", ")}`);
+            setCostArray((prevCostArray) => [...prevCostArray, totalCost]);
+            setCost((prevCost) => parseFloat(prevCost) + parseFloat(totalCost));
+            setAddedText(`Your ${itemName.toLowerCase()} with ${selectedToppings.join(", ")} has been added to the cart!`);
+        }
+
+        //reset
+        setCurrentState("menu");
+        setRememberItem(-1);
+        setSelectedToppings([]);
+        setToppingsCost(0);
     }
-  }, [addedTrigger]);
 
-  return (
-    <div>
-      <header>
-        <Navigation />
-      </header>
+    //timer to showcase when user have order item and then message go bye bye
+    useEffect(() => {
+        if (timerTriggerText) {
+          const timer = setTimeout(() => {
+            setTimerTriggerText(false);
+          }, 3000);
+    } }, [timerTriggerText]);
 
-      <div>
-        {showItemsSizes ? (
-          <div>
-            <SizeView sizeItems={sizeItems} finalAdd={finalAdd} />
-          </div>
-        ) : (
-          <div>
-            <MenuView
-              menuItems={menuItems}
-              addThenChecksSize={addThenChecksSize}
-            />
-          </div>
-        )}
+    return (
+        <div>
+            <header>
+                <Navigation />
+            </header>
 
-        {addedTrigger && (
-          <div>
-            <p>{addedText}</p>
-          </div>
-        )}
-      </div>
-      <div>
-        <CartButton />
-      </div>
-    </div>
-  );
+            <div>
+                {currentState === "menu" && (
+                    <div>
+                        <MenuView menuItems={menuItems} functionIntentionalAdd={intentionalAdd} />
+                    </div>   
+                )}
+
+                {currentState === "size" && (
+                    <div>
+                        <SizeView sizeItems={sizeItems} functionSizeAdd={sizeAdd} />
+                    </div>
+                )}
+
+                {currentState === "toppings" && (
+                    <div>
+                        <ToppingsView menuToppings={menuToppings} functionToppingsAdd={toppingsAdd} toppingsFinalPush={toppingsFinalPush}/>
+                        <button></button>
+                    </div>
+                )}
+            </div>
+
+            <div>
+                {timerTriggerText && (
+                    <div>
+                        <p>{addedText}</p>
+                    </div>
+                )}
+            </div>
+            <div>
+                <CartButton />
+            </div>
+
+        </div>
+    );
 }
+
+//you have made it to the view section which has been move to down under congrants
+const MenuView = ({ menuItems, functionIntentionalAdd }) => {
+    return (
+    <div>
+        <h4>Menu</h4>
+        <p>Please select an item on the menu</p>
+        <div>
+            {menuItems.map((item, index) => (
+                <button key={index} onClick={() => functionIntentionalAdd(item)}>
+                {item}
+                </button>
+            ))}
+        </div>
+    </div>
+    );
+};
+
+const SizeView = ({ sizeItems, functionSizeAdd }) => {
+    return (
+        <div>
+            <h4>Please choose a size for your order:</h4>
+            <div>
+                {sizeItems.map((size, index) => (
+                    <button key={index} onClick={() => functionSizeAdd(index)}>
+                    {size}
+                    </button>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+const ToppingsView = ({ menuToppings, functionToppingsAdd, toppingsFinalPush }) => {
+    return (
+        <div>
+            <h4>Please choose the toppings for your order:</h4>
+            <div>
+                {menuToppings.map((topping, index) => (
+                    <div key={index}>
+                        <label>
+                            <input type="checkbox" onChange={(e) => functionToppingsAdd(index, e.target.checked)} />
+                            {topping}
+                        </label>
+                    </div>
+                ))}
+            </div>
+            <div>
+                <button onClick={toppingsFinalPush}>Add to Cart</button>
+            </div>
+        </div>
+    );
+};
 
 export default Order;
