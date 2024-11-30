@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import {BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate } from 'react-router-dom';
 import Navigation from '../functions/Navigation';
 
-const CostWillBeZero = ({setCost}) => {
+const CostWillBeZero = ({setCost, cost}) => {
     useEffect(() => {
-        setCost(0);
+        if (cost === null) {
+            setCost(0);
+        }
     }, [setCost]);
-
     return ( null );
 }
 
 function Cart ({items = [], removeItem, removeAll, setCostArray, costArray, setCost, cost}) {
     //if it's in-person deliver or online
     //time is also set whenever a delibutton is trigger
+    //also like half the 
     const [typeOrder, setTypeOrder] = useState("");
     const [deliTime, setDeliTime] = useState(0);
     const [typePay, setTypePay] = useState("");
@@ -50,6 +52,7 @@ function Cart ({items = [], removeItem, removeAll, setCostArray, costArray, setC
         setCostArray([]);
         setCostArray(0);   
         setCost(0);
+        CostWillBeZero();
     }
 
     return (

@@ -35,6 +35,18 @@ const MenuView = ({ menuItems, addThenChecksSize }) => {
   );
 };
 
+//the idea here is to display everything 
+const ToppingView = ({selectedOrder, ItemMenu}) => {
+  return (
+    <div>
+      {selectedOrder === 'Burger' (
+        <div>
+        </div>
+       )}
+    </div>
+  )
+}
+
 const SizeView = ({ sizeItems, finalAdd }) => {
   return (
     <div>
@@ -55,20 +67,18 @@ function Order({ addItem, setCostArray, setCost }) {
   const [addedTrigger, setAddedTrigger] = useState(false); //allows the program to know if something has been added
   const [addedText, setAddedText] = useState(""); //allows the program to know if the added text show showcase
   const [showItemsSizes, setshowItemsSizes] = useState(false); //allows the program to know if to show the sizes of the menu
-  const [rememberItem, setRememberItem] = useState(""); //
+  const [rememberItem, setRememberItem] = useState(""); //this remembers an item position
 
   //menu items
-  const menuItems = [
-    "Pizza",
-    "Poison",
-    "Soda Pop",
-    "Fries",
-    "Onion Rings",
-    "Golden Apple",
-    "Immortal Phoenix Gearblade",
-  ];
+  const menuItems = ["Burger", "Chicken Burger", "Double Burger", "Double Chicken Burger", "Fries", "Onion Rings", "Chicken Nuggets", "Chicken Fingers", "Immortal Phoenix Gearblade"];
+  //toppings or whatever for the items on the main menu
+  //if it's 0 -- then skip it there are no toppings it goes to size?
+  const menuToppings = [["Let-Us", "Tomato", "Cheese"], ["Let-Us", "Tomato", "Cheese"], ["Let-Us", "Tomato", "Cheese"], ["Let-Us", "Tomato", "Cheese"], 0, 0, 0, 0];
   //the items cost
-  const costMenu = [14.99, 99.99, 3.23, 1.29, 1.29, 57, 1];
+  const costMenu = [4.59, 4.89, 8.59, 8.89, 3.99, 3.99, 2.99, 5.99, 99.99];
+  //drink menu
+  const drinkMenu = ["Water", "Pop", "Milkshake"];
+  const costDrink = [0.99, 3,99, 4.49];
 
   //sizeItems: size of an orders
   //sizeCost: how much things get times by depending on the order size
@@ -108,18 +118,10 @@ function Order({ addItem, setCostArray, setCost }) {
       addItem(`${itemName} - ${sizeItems[sizeIndex]}`);
       setCostArray((prevCostArray) => [...prevCostArray, totalCost]);
       setCost((prevCost) => prevCost + totalCost);
-      setAddedText(
-        `Your ${itemName.toLowerCase()} ${
-          sizeItems[sizeIndex]
-        } has been added to the cart!`
-      );
+      setAddedText(`Your ${itemName.toLowerCase()} ${sizeItems[sizeIndex]} has been added to the cart!`);
 
       setInput("");
-      setAddedText(
-        `Your ${
-          sizeItems[sizeIndex]
-        } ${itemName.toLowerCase()} has been added to the cart!`
-      );
+      setAddedText(`Your ${sizeItems[sizeIndex]} ${itemName.toLowerCase()} has been added to the cart!`);
       setshowItemsSizes(false);
       setRememberItem(null);
       setAddedTrigger(true);
