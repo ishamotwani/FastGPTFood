@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 //Will set all the required fields to true right now most of them are false so i can test on postman
+//Hello
 const orderSchema = new mongoose.Schema({
   customerName: {
     type: String,
