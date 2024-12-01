@@ -27,14 +27,15 @@ function Order({ addItem, setCostArray, setCost }) {
     const [selectedToppings, setSelectedToppings] = useState([]); //remembers the toppings 
     const [toppingsCost, setToppingsCost] = useState(0);
     //menu related const
-    const menuItems = ["Burger", "Chicken Burger", "Double Burger", "Double Chicken Burger", "Fries", "Onion Rings", "Chicken Nuggets", "Chicken Fingers", "Immortal Phoenix Gearblade"];
+    const menuItems = ["Burger", "Chicken Burger", "Double Burger", "Double Chicken Burger", "Fries", "Onion Rings", "Chicken Nuggets", "Chicken Fingers", "Water", "Pop", "Milkshake", "Immortal Phoenix Gearblade"];
     const menuToppings = ["Lettuce", "Tomato", "Cheese"];
-    const costMenu = [4.59, 4.89, 8.59, 8.89, 3.99, 3.99, 2.99, 5.99, 99.99];
-    const drinkMenu = ["Water", "Pop", "Milkshake", "No Drink"];
-    const costDrink = [0.99, 3.99, 4.49, 0];
+    const costMenu = [4.59, 4.89, 8.59, 8.89, 3.99, 3.99, 2.99, 5.99, 0.99, 3.99, 4.49, 99.99];
+    //const drinkMenu = [ "No Drink"];
+    //const costDrink = [0.99, 3.99, 4.49, 0];
 
+    //for all side options and drinks
     const sizeItems = ["small", "medium", "large"];
-    const sizeCost = [1, 1.25, 1.5];
+    const sizeCost = [1, 1.25, 1.5]; //muitply for choice of size
     
     const menuItemToLower = menuItems.map((item) => item.toLowerCase());
 
@@ -48,9 +49,9 @@ function Order({ addItem, setCostArray, setCost }) {
   
           //0 - 3; to toppings (since thoses are all burgers
           //4+ is all size related; idk about 
-          if (index === 0 || index === 1 || index === 2 || index === 3) {
+          if (index < 4) {
               setCurrentState("toppings");
-          } else if (index === 4 || index === 5 || index === 6 || index === 7) {
+          } else if (index >= 4 && index !== 11) {
               setCurrentState("size");
           }
       } else {
@@ -86,6 +87,7 @@ function Order({ addItem, setCostArray, setCost }) {
         }
     }
 
+    //user is allowed to click as many toppings as they want
     const toppingsAdd = (toppingIndex, isChecked) => {
         const toppingName = menuToppings[toppingIndex];
         const toppingCost = 0.5; 
@@ -101,6 +103,7 @@ function Order({ addItem, setCostArray, setCost }) {
         }
     };
 
+    //commits the item to the cart / cost
     const toppingsFinalPush = () => {
         const itemName = menuItems[rememberItem];
         const itemCost = costMenu[rememberItem];
@@ -230,5 +233,5 @@ const ToppingsView = ({ menuToppings, functionToppingsAdd, toppingsFinalPush }) 
         </div>
     );
 };
-
+// a second button appears there idk why 
 export default Order;
