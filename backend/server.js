@@ -27,4 +27,12 @@ app.post("/api/order", async (req, res) => {
 });
 app.listen(3000, () => {
   connectDB();
+=======
+const app = express();
+app.get("/", (req, res) => {
+  res.send("server is running");
+});
+app.listen(3000, () => {
+  console.log("server is running on port 3000");
+>>>>>>> Stashed changes
 });
