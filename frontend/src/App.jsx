@@ -18,8 +18,6 @@ import Navigation from './functions/Navigation';
 //and the functions folder is for all functions which will be used globally
 
 function App() {
-
-
   //The list is done here so we can use it on other pages
   // with the add button for the order page and remove for the cart page
   //the cost list will set a cost for the item; with items and cost being connected by list placement

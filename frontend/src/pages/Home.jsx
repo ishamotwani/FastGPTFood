@@ -34,15 +34,15 @@ function Home() {
             </div>
           </div>
 
-          <span>
+          <div class="mainImages">
             <img src={TempImg} alt='maybe about our order different system?' className='specialImg' />
             <img src={TempImg} alt='maybe like donations we are doing?' className='specialImg'/>
-          </span>
+          </div>
 
-          <p className='Imgdescription'>
+          <div className='Imgdescription'>
             <span>Something About the image  </span>
             <span>Something About the image</span>
-          </p>
+          </div>
         </div>
     );
 }

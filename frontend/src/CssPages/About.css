@@ -2,17 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #ffe8e8;
-}
-
-header img {
-    height: 60px;
-    object-fit: contain;
-}
-
-header nav {
-    display: flex;
-    gap: 10px;
+    background-color: white;
 }
 
 main {
@@ -22,59 +12,65 @@ main {
 
 p {
     font-size: 1.2rem;
-    color: #555;
+    color: grey;
 }
 
-.orderImg {
-    max-width: 60%;
-    height: auto; 
-    border-radius: 10px;
-    margin: 20px auto;
-}
-
-.specialImgSection {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+h2 {
+    font-size: 1.8rem;
     margin: 20px 0;
-}
+  }
 
-.ourBeliefImg {
-    max-width: 45%; 
-    height: auto; 
-    margin-bottom: 10px;
-}
-
-.personImg {
+.missionsBelief {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex: 1;
-    max-width: 35%;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px;
+    height: 250px;
+    background-color: grey;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px black; 
 }
 
-.personImg p {
-    font-size: 0.8rem;
-    margin: 0;
+.missionsBelief img {
+    width: 300px;
+    height: 200px;
+    border-radius: 8px;
+    background-color: grey;
 }
 
-.Imgdescription {
-    max-width: 100%; 
-    height: auto; 
-    margin-left: 20px;
+.missionsBelief span {
+    font-size: 1rem;
+    color: white;
+    text-align: left;
 }
 
-button {
-    padding: 10px 20px;
-    background-color: #63ee6f;
-    color: rgb(255, 228, 228);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-    margin-top: 10px;
+.founders {
+    margin: 30px auto;
+    text-align: center;
 }
-
-button:hover {
-    background-color: #4cbf4e;
+  
+.foundersImages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
 }
+  
+.foundersImages img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid grey;
+    background-color: white;
+}
+  
+.foundersImages p {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: white;
+}  

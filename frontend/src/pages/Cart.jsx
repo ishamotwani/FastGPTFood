@@ -65,7 +65,7 @@ function Cart ({items = [], removeItem, removeAll, setCostArray, costArray, setC
             {items.length === 0 ? (
                 <p>cart is empty</p>
             ) : (
-                <div>
+                <div className="orderItems">
                     {items.map((item, index) => (
                         <span key={index}>
                             {item} <button onClick={() => removeItem(index)}>  X  </button>
@@ -76,6 +76,7 @@ function Cart ({items = [], removeItem, removeAll, setCostArray, costArray, setC
         </div>
 
         <div className='DeliveryType'>
+            <h2>Delivery</h2>
             <button onClick={homeDeliButton}>Drop-Off Delivery</button>
             <button onClick={inPersonDeliButton}>In-Person Pick Up</button>
             {typeOrder === "" ? (
@@ -122,14 +123,7 @@ function Cart ({items = [], removeItem, removeAll, setCostArray, costArray, setC
         </div>
         
         <div className='costOverall'>
-            {cost !== 0 && cost !== null ? (
-                <p>Overall Cost: ${cost}</p>
-            ) : (
-                <div>
-                    <p>Your cart is empty</p>
-                    <CostWillBeZero setCost={setCost} />
-                </div>
-            )}
+            {cost > 0 ? <p>Total: ${cost}</p> : <p>No items in cart</p>}
         </div>
         
         <div className='purchase'>

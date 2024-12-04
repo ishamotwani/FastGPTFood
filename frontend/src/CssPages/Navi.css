@@ -1,29 +1,26 @@
-.homeButton {
+.navi {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  left: 60vh;
-  width: 100px;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  gap: 15px;
+  padding: 10px 20px;
+  border-radius: 8px;
 }
 
-.aboutButton {
-  position: absolute;
-  left: 80vh;
-  width: 100px;
+.navi button {
+  padding: 10px 15px;
+  font-size: 1rm;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.contactButton {
-  position: absolute;
-  left: 100vh;
-  width: 100px;
-}
-
-.orderButton {
-  position: absolute;
-  left: 120vh;
-  width: 100px;
-}
-
-.cartButton {
-  position: absolute;
-  left: 140vh;
-  width: 100px;
+.navi button:hover {
+  background-color: #4cbf4e; 
+  transform: scale(1.05); 
 }

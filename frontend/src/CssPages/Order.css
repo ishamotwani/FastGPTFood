@@ -1,0 +1,75 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    color: grey;
+}
+
+
+.menuSection, .sizeSection, .toppingsSection, .cartSection {
+    margin-bottom: 20px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px grey;
+}
+
+.menuSection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.menuSection img {
+    width: 50%;
+    height: auto;
+    border-radius: 8px;
+}
+
+button {
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:disabled {
+    background-color: red;
+    cursor: not-allowed;
+}
+
+.menu-items, .size-items, .toppings-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-around;
+}
+
+.menu-items button, .size-items button, .toppings-items div {
+    flex: 1 1 calc(30% - 20px);
+    text-align: center;
+}
+
+.toppings-items label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+}
+
+.cart-section {
+    text-align: center;
+}
+
+.cart-section p {
+    margin: 10px 0;
+}
+
+.cart-section button {
+    margin-top: 15px;
+    padding: 10px 20px;
+}

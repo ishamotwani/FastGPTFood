@@ -3,6 +3,19 @@ import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate,
 import Navigation from "../functions/Navigation";
 import "../CssPages/Order.css";
 
+//image imports section
+import burger from '../images/foodFolder/burger.jpg';
+import doubleBurger from '../images/foodFolder/DB.jpg';
+import chickenBurger from '../images/foodFolder/CB.webp';
+import doubleChickenBurger from '../images/foodFolder/doubleCB.jpg';
+import fries from '../images/foodFolder/fries.webp';
+import onionRings from '../images/foodFolder/rings.webp';
+import nuggets from '../images/foodFolder/nuggets.jpg';
+import fingers from '../images/foodFolder/fingers.jpg';
+import water from '../images/foodFolder/water.png';
+import pop from '../images/foodFolder/soda.jpg';
+import milkshake from '../images/foodFolder/milkshake.jpg';
+
 //im restarting this from ground level since the code was order one was messy tbh
 //and i would need to re-do it anyhow for the chatbot so doing this JUST TRAINING I guess?
 function CartButton() {
@@ -27,31 +40,39 @@ function Order({ addItem, setCostArray, setCost }) {
     const [selectedToppings, setSelectedToppings] = useState([]); //remembers the toppings 
     const [toppingsCost, setToppingsCost] = useState(0);
     //menu related const
-    const menuItems = ["Burger", "Chicken Burger", "Double Burger", "Double Chicken Burger", "Fries", "Onion Rings", "Chicken Nuggets", "Chicken Fingers", "Water", "Pop", "Milkshake", "Immortal Phoenix Gearblade"];
+    const menuItems = [ 
+        {name: "Burger", price: 4.59, image: burger},
+        {name: "Chicken Burger", price: 4.89, image: doubleBurger},
+        {name: "Double Burger", price: 8.59, image: chickenBurger},
+        {name: "Double Chicken Burger", price: 4.89, image: doubleChickenBurger},
+        {name: "Fries", price: 3.39, image: fries},
+        {name: "Onion Rings", price: 3.99, image: onionRings},
+        {name: "Chicken Nuggets", price: 2.99, image: nuggets},
+        {name: "Chicken Fingers", price: 5.99, image: fingers},
+        {name: "Water", price: 0.99, image: water},
+        {name: "Pop", price: 3.99, image: pop},
+        {name: "Milkshake", price: 3.99, image: milkshake}
+    ];
+
     const menuToppings = ["Lettuce", "Tomato", "Cheese"];
-    const costMenu = [4.59, 4.89, 8.59, 8.89, 3.99, 3.99, 2.99, 5.99, 0.99, 3.99, 4.49, 99.99];
-    //const drinkMenu = [ "No Drink"];
-    //const costDrink = [0.99, 3.99, 4.49, 0];
 
     //for all side options and drinks
     const sizeItems = ["small", "medium", "large"];
     const sizeCost = [1, 1.25, 1.5]; //muitply for choice of size
     
-    const menuItemToLower = menuItems.map((item) => item.toLowerCase());
-
     //the inetentional add; where the user just has a menu and an add function
     const intentionalAdd = (name) => {
-      name = name.trim().toLowerCase();
-  
-      const index = menuItemToLower.indexOf(name); 
+        const menuItemToLower = menuItems.map((item) => item.name.toLowerCase());
+        const index = menuItems.findIndex((item) => item.name === name); 
+
       if (index !== -1) {
           setRememberItem(index); 
   
           //0 - 3; to toppings (since thoses are all burgers
-          //4+ is all size related; idk about 
+          //4+ is all size related
           if (index < 4) {
               setCurrentState("toppings");
-          } else if (index >= 4 && index !== 11) {
+          } else if (index >= 4) {
               setCurrentState("size");
           }
       } else {
@@ -61,11 +82,11 @@ function Order({ addItem, setCostArray, setCost }) {
       }
   };
   
-  //when size matters fr fr
+  //items which have a size dependency
     const sizeAdd = (sizeIndex) => {
         if (rememberItem !== -1) {
-            const itemName = menuItems[rememberItem];
-            const baseCost = costMenu[rememberItem];
+            const itemName = menuItems[rememberItem]?.name;
+            const baseCost = menuItems[rememberItem]?.price;
             const sizeFactor = sizeCost[sizeIndex];
             const totalCost = parseFloat(baseCost * sizeFactor).toFixed(2);
 
@@ -105,13 +126,13 @@ function Order({ addItem, setCostArray, setCost }) {
 
     //commits the item to the cart / cost
     const toppingsFinalPush = () => {
-        const itemName = menuItems[rememberItem];
-        const itemCost = costMenu[rememberItem];
+        const itemName = menuItems[rememberItem]?.name;
+        const itemCost = menuItems[rememberItem]?.price;
         const totalCost = parseFloat(itemCost + toppingsCost).toFixed(2);
 
         if (selectedToppings.length === 0) {
-            const totalCost = (itemCost).toFixed(2);
-            addItem(`${itemName} with ${selectedToppings.join(", ")}`);
+            const totalCost = itemCost.toFixed(2);
+            addItem(itemName);
             setCostArray((prevCostArray) => [...prevCostArray, totalCost]);
             setCost((prevCost) => parseFloat(prevCost) + parseFloat(totalCost));
             setAddedText(`Your ${itemName.toLowerCase()} has been added to the cart!`);
@@ -132,11 +153,14 @@ function Order({ addItem, setCostArray, setCost }) {
     }
 
     //timer to showcase when user have order item and then message go bye bye
+    //also now only triggers once upon opening the order page for some reason ?
     useEffect(() => {
         if (timerTriggerText) {
           const timer = setTimeout(() => {
             setTimerTriggerText(false);
           }, 3000);
+
+          return () => clearTimeout(timer);
     } }, [timerTriggerText]);
 
     return (
@@ -144,6 +168,14 @@ function Order({ addItem, setCostArray, setCost }) {
             <header>
                 <Navigation />
             </header>
+
+            <div>
+                {timerTriggerText && (
+                    <div>
+                        <p>{addedText}</p>
+                    </div>
+                )}
+            </div>
 
             <div>
                 {currentState === "menu" && (
@@ -161,18 +193,10 @@ function Order({ addItem, setCostArray, setCost }) {
                 {currentState === "toppings" && (
                     <div>
                         <ToppingsView menuToppings={menuToppings} functionToppingsAdd={toppingsAdd} toppingsFinalPush={toppingsFinalPush}/>
-                        <button></button>
                     </div>
                 )}
             </div>
 
-            <div>
-                {timerTriggerText && (
-                    <div>
-                        <p>{addedText}</p>
-                    </div>
-                )}
-            </div>
             <div>
                 <CartButton />
             </div>
@@ -182,27 +206,35 @@ function Order({ addItem, setCostArray, setCost }) {
 }
 
 //you have made it to the view section which has been move to down under congrants
+//default view which now shows items;prices;and images
 const MenuView = ({ menuItems, functionIntentionalAdd }) => {
     return (
-    <div>
-        <h4>Menu</h4>
-        <p>Please select an item on the menu</p>
         <div>
-            {menuItems.map((item, index) => (
-                <button key={index} onClick={() => functionIntentionalAdd(item)}>
-                {item}
-                </button>
-            ))}
+            <h4>Menu</h4>
+            <p>Please select an item on the menu</p>
+            
+            <div className="menuSection">
+                {menuItems.map((item, index) => (
+                    <div key={index}>
+                        <img src={item.image} alt={item.name} />
+                        <h5>{item.name}</h5>
+                        <p>${item.price.toFixed(2)}</p>
+                        <button onClick={() => functionIntentionalAdd(item.name)}>
+                            Add to Order
+                        </button>
+                    </div>
+                ))}
+            </div>
         </div>
-    </div>
     );
 };
 
+//order view for sizes
 const SizeView = ({ sizeItems, functionSizeAdd }) => {
     return (
         <div>
             <h4>Please choose a size for your order:</h4>
-            <div>
+            <div className="sizeSection">
                 {sizeItems.map((size, index) => (
                     <button key={index} onClick={() => functionSizeAdd(index)}>
                     {size}
@@ -213,11 +245,12 @@ const SizeView = ({ sizeItems, functionSizeAdd }) => {
     );
 };
 
+//order view for toppings / burgers
 const ToppingsView = ({ menuToppings, functionToppingsAdd, toppingsFinalPush }) => {
     return (
         <div>
             <h4>Please choose the toppings for your order:</h4>
-            <div>
+            <div className='toppingsSection'>
                 {menuToppings.map((topping, index) => (
                     <div key={index}>
                         <label>
@@ -233,5 +266,5 @@ const ToppingsView = ({ menuToppings, functionToppingsAdd, toppingsFinalPush }) 
         </div>
     );
 };
-// a second button appears there idk why 
+
 export default Order;

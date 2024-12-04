@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #ffe8e8;
+    background-color: white;
 }
 
 main {
@@ -11,42 +11,65 @@ main {
 }
 
 .orderImg {
-    max-width: 60%;
-    height: auto; 
-    border-radius: 10px;
-    margin: 20px auto;
+    max-width: 200px;
+    height: 150px; 
+    border-radius: 8px;
 }
 
 .specialImgSection {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    margin: 20px 0;
+    margin: 20px auto;
+    padding: 10px;
+    max-width: 500px;
+    background: white;
+    border: 1px solid white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px black; 
 }
 
 .specialImg {
-    max-width: 45%; 
-    height: auto; 
-    margin-bottom: 10px;
+    max-width: 200px; 
+    height: 150px; 
+    border: 1px solid grey;
+    border-radius: 8px;
+    background-color: white;
+    display: block;
 }
+
+.mainImages {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px auto;
+  }
 
 .imgContent {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    flex: 1;
+    justify-content: center;
+    margin-left: 20px;
 }
 
 .imgContent p {
-    font-size: 0.8rem;
-    margin: 0;
+    font-size: 1rem;
+    color: grey;
+    margin-bottom: 10px;
 }
 
 .Imgdescription {
-    max-width: 100%; 
-    height: auto; 
-    margin-left: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 10px auto;
+    font-size: 0.9rem;
+    color: grey;
 }
+
+.imgDescription span {
+    text-align: center;
+  }
 
 button {
     padding: 10px 20px;
