@@ -16,8 +16,7 @@ import water from '../images/foodFolder/water.png';
 import pop from '../images/foodFolder/soda.jpg';
 import milkshake from '../images/foodFolder/milkshake.jpg';
 
-//im restarting this from ground level since the code was order one was messy tbh
-//and i would need to re-do it anyhow for the chatbot so doing this JUST TRAINING I guess?
+//cart button creation
 function CartButton() {
     const navigate = useNavigate();
   
